@@ -1,11 +1,9 @@
 <header class="site-header">
 
     <div class="wrapper">
-
-    <a class="site-title" href="{{ site.baseurl }}/">{{ site.title }}</a>
     
     <div class="menu" >
-  <select class="selects" name="Country">
+  <select id="country" class="selects" name="Country">
     <option selected="Country">Select a Country</option>
     <option value="EL SALVADOR">EL SALVADOR</option>
     <option value="COLOMBIA">COLOMBIA</option>
@@ -14,7 +12,7 @@
     <option value="INDIA">INDIA</option>
     <option value="INDONESIA">INDONESIA</option>
   </select>
-  <select class="selects" name="Indicator">
+  <select id="indicator" class="selects" name="Indicator">
     <option selected="Indicator">Select a Indicator</option>
     <option value="Married women currently using any method of contraception">Married women currently using any method of contraception</option>
     <option value="Married women currently using any modern method of contraception">Married women currently using any modern method of contraception</option>
@@ -37,14 +35,14 @@
     <option value="Wife beating justified for at least one specific reason [Women]">Wife beating justified for at least one specific reason [Women]</option>
     <option value="No antenatal care">No antenatal care</option>
     <option value="General fertility rate">General fertility rate</option>
-    <option value="Women giving birth by age 15">2Women giving birth by age 15</option>
+    <option value="Women giving birth by age 15">Women giving birth by age 15</option>
     <option value="Women giving birth by age 18">Women giving birth by age 18</option>
     <option value="Women who decide themselves how their earnings are used">Women who decide themselves how their earnings are used</option>
     <option value="Women who decide jointly with partner how their earnings are used">Women who decide jointly with partner how their earnings are used</option>
     <option value="Wife earns more than husband">Wife earns more than husband</option>
     <option value="ICF International, 2015. The DHS Program STATcompiler. Funded by USAID. https://www.statcompiler.com. November 16 2017">ICF International, 2015. The DHS Program STATcompiler. Funded by USAID. https://www.statcompiler.com. November 16 2017</option>
   </select>
-  <select class="selects" name="Age Groups">
+  <select id="age_group" class="selects" name="Age Groups">
     <option selected="Age Groups">Age Groups</option>
     <option value="15-20">15-20</option>
     <option value="20-25">20-25</option>
@@ -52,7 +50,7 @@
     <option value="30-35">30-35</option>
     
   </select>
-  <select class="selects" name="Year">
+  <select id="year" class="selects" name="Year">
     <option selected="Year">Year</option>
     <option value="2017">2017</option>
     <option value="2016">2016</option>
@@ -67,9 +65,29 @@
     <option value="2007">2007</option>
     <option value="2006">2006</option>
   </select>
-  <button class="selects" type="button" onclick="alert('Searching')">Search!</button>
+  <button id="searchbutton" class="selects" type="button" onclick="loadDoc()">Search!</button>
 </div>
+  
+  <script>
+    function loadDoc() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == XMLHttpRequest && this.status == 200) {
+          document.getElementById("searchbutton").innerHTML = this.responseText;
+        }
+      };
+      var Country = document.getElementById("country")
+      var Indicator = document.getElementById("indicator")
+      var Age_group = document.getElementById("age_group")
+      var Year = document.getElementById("year")
+      xhttp.open("GET","http://localhost/readdata/Country/Indicator/Age_group/Year", true);
+      xhttp.send();
 
+      var js = JSON.parse(xhttp.response)
+
+      console.log(js)
+    }
+  </script>
     </div>
     
 </header>
