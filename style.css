@@ -1,0 +1,17 @@
+.top{
+
+	background-color: #55BAB2;
+}
+.top h1{
+	color: white;
+	font-weight: bold;
+	font-family: Ariel;
+}
+.top img{
+	width:100%;
+	height:100%;
+}
+
+.bottom{
+	background-color: #07509B;
+}
