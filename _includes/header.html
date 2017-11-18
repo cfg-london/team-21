@@ -5,12 +5,12 @@
     <div class="menu" >
   <select id="country" class="selects" name="Country" onchange="changecountry()">
     <option selected="Select a Country">Select a Country</option>
-    <option value="EL SALVADOR">EL SALVADOR</option>
+    <option value="El Salvador">EL SALVADOR</option>
     <option value="Colombia">COLOMBIA</option>
-    <option value="SENEGAL">SENEGAL</option>
-    <option value="KENYA">KENYA</option>
-    <option value="INDIA">INDIA</option>
-    <option value="INDONESIA">INDONESIA</option>
+    <option value="Senegal">SENEGAL</option>
+    <option value="Kenya">KENYA</option>
+    <option value="India">INDIA</option>
+    <option value="Indonesia">INDONESIA</option>
   </select>
   <select id="indicator" class="selects" name="Indicator" onchange="changeindicator()">
     <option selected="Select a Indicator">Select a Indicator</option>
@@ -50,7 +50,7 @@
     <option value="30-35">30-35</option> -->
     
   </select>
-  <select id="year" class="selects" name="Year">
+  <select id="year" class="selects" name="Year" onchange="changeyear()">
     <option selected="Year">Year</option>
     <!-- <option value="2017">2017</option>
     <option value="2016">2016</option>
@@ -78,13 +78,19 @@
       x.add(option);
     }  */
 
+
    	function changecountry() {
+   		var x = document.getElementById("year");
+
+      		for (var i=0;i<x.length;  i++) {
+     			x.remove(i);
+			}
    		var Indicator = document.getElementById("indicator").value
    		if(Indicator != "Select a Indicator"){
    			var xhttp = new XMLHttpRequest();
       		xhttp.onreadystatechange = function() {
         		if (this.readyState == XMLHttpRequest && this.status == 200) {
-          			document.getElementById("searchbutton").innerHTML = this.responseText;
+          			document.getElementById("country").innerHTML = this.responseText;
         		}
       		};
       		var Country = document.getElementById("country").value
@@ -95,9 +101,6 @@
       		xhttp.send();
 
       		var js = JSON.parse(xhttp.responseText);
-
-      		var x = document.getElementById("year");
-
       		for(var i=0 ; i < js.length; i++){
       			var option = document.createElement("OPTION");
         		option.setAttribute("value", js[i]);
@@ -110,12 +113,17 @@
    	}
 
    	function changeindicator() {
+   		var x = document.getElementById("year");
+
+			for (var i=0;i<x.length;  i++) {
+     			x.remove(i);
+			}
    		var Country = document.getElementById("country").value
    		if(Country != "Select a Country"){
    			var xhttp = new XMLHttpRequest();
       		xhttp.onreadystatechange = function() {
         		if (this.readyState == XMLHttpRequest && this.status == 200) {
-          			document.getElementById("searchbutton").innerHTML = this.responseText;
+          			document.getElementById("indicator").innerHTML = this.responseText;
         		}
       		};
       		var Indicator = document.getElementById("indicator").value
@@ -127,8 +135,6 @@
 
       		var js = JSON.parse(xhttp.responseText);
 
-      		var x = document.getElementById("year");
-
       		for(var i=0 ; i < js.length; i++){
       			var option = document.createElement("OPTION");
         		option.setAttribute("value", js[i]);
@@ -138,6 +144,39 @@
         		x.appendChild(option);
       		}
    		}
+   	}
+
+   	function changeyear() {
+   			var x = document.getElementById("age_group");
+
+      		for (var i=0;i<x.length;  i++) {
+     			x.remove(i);
+			}
+   			var xhttp = new XMLHttpRequest();
+      		xhttp.onreadystatechange = function() {
+        		if (this.readyState == XMLHttpRequest && this.status == 200) {
+          			document.getElementById("year").innerHTML = this.responseText;
+        		}
+      		};
+      		var Country = document.getElementById("country").value
+      		var Indicator = document.getElementById("indicator").value
+      		var Year = document.getElementById("year").value
+      		xhttp.open("GET","http://localhost:5000/possiblegroups/"+Country+"/"+Indicator+"/"+Year, false);
+      		xhttp.setRequestHeader( 'Access-Control-Allow-Headers', '*' );
+      		xhttp.setRequestHeader( 'Content-Type', 'application/javascript' );
+      		xhttp.setRequestHeader( 'Access-Control-Allow-Origin', '*' );
+      		xhttp.send();
+
+      		var js = JSON.parse(xhttp.responseText);
+
+      		for(var i=0 ; i < js.length; i++){
+      			var option = document.createElement("OPTION");
+        		option.setAttribute("value", js[i]);
+        		var t = document.createTextNode(js[i]);
+        		option.appendChild(t);
+        		option.text = js[i];
+        		x.appendChild(option);
+      		}
    	}
 
     function loadDoc() {
