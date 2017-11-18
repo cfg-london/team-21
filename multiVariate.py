@@ -69,6 +69,39 @@ def one_country_over_time(indicator, country, group):
 
 
 
+def one_country_all_groups(indicator, country):
+    goodcountry = []
+    goodgroupid = 0
+    data = []
+    x_values = []
+    y1_values = []
+    y2_values = []
+    y3_values = []
+    y4_values = []
+
+    indicator = indicator + ".csv"
+    with open(indicator) as f:
+            reader = csv.reader(f)
+            for row in reader:
+                    data.append(row)
+
+            for row in data:
+                    if row[0] == country:
+                            goodcountry.append(row)
+            for row in goodcountry:
+                row[1]  = row[1][:4]
+            
+            for k in goodcountry:
+                x_values.append(float(k[1]))
+                y1_values.append(float(k[3]))
+                y2_values.append(float(k[4]))
+                y3_values.append(float(k[5]))
+                y4_values.append(float(k[6]))
+
+    return [x_values, y1_values, y2_values, y3_values, y4_values]   
+
+
+
 
 
 def simple_correlation_w_plot(indicator1, indicator2, country, group):
