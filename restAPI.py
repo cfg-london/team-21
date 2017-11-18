@@ -14,7 +14,7 @@ def hello():
 @app.route("/readdata/<country>/<index>/<age>/<year>",methods=['GET'])
 def readdata(country,age,year,index):
     indicator = indicatorMap.dict_map[index]
-    data = json.dumps(getSingleValue.getvalue(indicator,courtry,year,age))
+    data = json.dumps(getSingleValue.getvalue(indicator,country,year,age))
     return data
 
 
