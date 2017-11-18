@@ -98,7 +98,7 @@ def comparecountry(indicator,year,group):
         lvalue.append(getvalue(indicator,lcountry[4],year,group))
     else:
         lvalue.append(0)
-    return lcountry,lvalue
+    return [lcountry,lvalue]
 
 def comparegroup(indicator,country,year):
     data = []
@@ -113,7 +113,7 @@ def comparegroup(indicator,country,year):
             pgroup.append(i)
     for i in pgroup:
         gvalue.append(getvalue(indicator,country,year,i))
-    return pgroup,gvalue
+    return [pgroup,gvalue]
 
 
 #print(getvalue("Married women currently using any modern method of contraception","Colombia","2015","15-19"))
