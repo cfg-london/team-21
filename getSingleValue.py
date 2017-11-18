@@ -8,6 +8,7 @@ def getvalue(indicator, country, year, group):
     goodcountry_and_year =[]
     goodgroupid = 0
     data = []
+    indicator = indicator + ".csv"
     with open(indicator) as f:
       reader = csv.reader(f)
       for row in reader:
@@ -32,4 +33,5 @@ def getvalue(indicator, country, year, group):
         newanswer = answer
     return newanswer
 
+#print(getvalue("Married women currently using any modern method of contraception.csv","Colombia","2015","15-19"))
 
