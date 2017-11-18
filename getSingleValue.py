@@ -31,9 +31,4 @@ def getvalue(indicator, country, year, group):
     else:
         newanswer = answer
     return newanswer
-i="Women first married by exact age 15.csv"
-c="Colombia"
-y="2005 DHS"
-g="Total"
-print(getvalue(i,c,y,g))
 
