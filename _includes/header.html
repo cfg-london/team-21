@@ -76,16 +76,21 @@
           document.getElementById("searchbutton").innerHTML = this.responseText;
         }
       };
-      var Country = document.getElementById("country")
-      var Indicator = document.getElementById("indicator")
-      var Age_group = document.getElementById("age_group")
-      var Year = document.getElementById("year")
-      xhttp.open("GET","http://localhost/readdata/Country/Indicator/Age_group/Year", true);
+      var Country = document.getElementById("country").value
+      var Indicator = document.getElementById("indicator").value
+      var Age_group = document.getElementById("age_group").value
+      var Year = document.getElementById("year").value
+
+      console.log(Country)
+      console.log(Indicator)
+      console.log(Age_group)
+      console.log(Year)
+      xhttp.open("GET","http://localhost:5000/readdata/"+Country+"/"+Indicator+"/"+Age_group+"/"+Year, true);
       xhttp.send();
+      console.log(xhttp.response)
+     // var js = JSON.parse(xhttp.responseText)
 
-      var js = JSON.parse(xhttp.response)
-
-      console.log(js)
+     // console.log(js)
     }
   </script>
     </div>

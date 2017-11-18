@@ -9,7 +9,7 @@ def hello():
     return "Hello World!"
 
 
-@app.route("/readdata/<country>/<age>/<year>/<index>",methods=['GET'])
+@app.route("/readdata/<country>/<index>/<age>/<year>",methods=['GET'])
 def readdata(country,age,year,index):
     data = country
     return data
