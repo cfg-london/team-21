@@ -1,7 +1,11 @@
 
 import csv
 
-
+popC = [48650000]
+popIndia=[1324000000]
+popIndo=[261100000]
+popK=[48460000]
+popS=[15410000]
 
 def getvalue(indicator, country, year, group):
     goodcountry = []
@@ -28,10 +32,9 @@ def getvalue(indicator, country, year, group):
     
     answer = goodcountry_and_year[0][goodgroupid]          
     if answer == "":
-        newanswer = "N/A"
+        newanswer = 0
     else:
         newanswer = float(answer)
-    
     return newanswer
 
 def possibleyear(indicator, country):
@@ -61,7 +64,48 @@ def possiblegroup(indicator,country, year):
     return pgroup
 
 
+def yearexists(indicator, country, year):
+    flag=0
+    for i in possibleyear(indicator, country):
+        if i == year:
+            flag=1
+    return flag
 
+def comparecountry(indicator,year,group):
+    lcountry=["Colombia","India","Indonesia","Kenya","Senegal"]
+    lvalue=[]
+    if yearexists(indicator,lcountry[0],year) == 1:
+        lvalue.append(getvalue(indicator,lcountry[0],year,group))
+    else:
+        lvalue.append(0)
+        
+    if yearexists(indicator,lcountry[1],year) == 1:
+        lvalue.append(getvalue(indicator,lcountry[1],year,group))
+    else:
+        lvalue.append(0)
+        
+    if yearexists(indicator,lcountry[2],year) == 1:
+        lvalue.append(getvalue(indicator,lcountry[2],year,group))
+    else:
+        lvalue.append(0)
+        
+    if yearexists(indicator,lcountry[3],year) == 1:
+        lvalue.append(getvalue(indicator,lcountry[3],year,group))
+    else:
+        lvalue.append(0)
+        
+    if yearexists(indicator,lcountry[4],year) == 1:
+        lvalue.append(getvalue(indicator,lcountry[4],year,group))
+    else:
+        lvalue.append(0)
+    return lcountry,lvalue
+
+
+print(getvalue("Married women currently using any modern method of contraception","Colombia","2015","15-19"))
+
+print (yearexists("Married women currently using any modern method of contraception","Colombia","2015"))
+
+print(comparecountry("Married women currently using any modern method of contraception","2015","15-19"))
 
 #print(getvalue("Married women currently using any modern method of contraception","Colombia","2015","15-19"))
 #print(possiblegroup("Married women currently using any modern method of contraception","Colombia","2005"))
