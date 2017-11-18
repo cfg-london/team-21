@@ -67,7 +67,7 @@
   </select>
   <button id="searchbutton" class="selects" type="button" onclick="loadDoc()">Search!</button>
 </div>
-  
+  <canvas id="myChart" width="400" height="400"></canvas>
   <script>
    /* function addCountry() {
       var x = document.getElementById("country");
@@ -78,13 +78,12 @@
       x.add(option);
     }  */
 
-
+    function ClearOptions(id){
+    	document.getElementById(id).options.length = 1;
+    }
    	function changecountry() {
-   		var x = document.getElementById("year");
-
-      		for (var i=0;i<x.length;  i++) {
-     			x.remove(i);
-			}
+   		ClearOptions("year")
+   		ClearOptions("age_group")
    		var Indicator = document.getElementById("indicator").value
    		if(Indicator != "Select a Indicator"){
    			var xhttp = new XMLHttpRequest();
@@ -100,6 +99,8 @@
       		xhttp.setRequestHeader( 'Access-Control-Allow-Origin', '*' );
       		xhttp.send();
 
+      		var x = document.getElementById("year");
+
       		var js = JSON.parse(xhttp.responseText);
       		for(var i=0 ; i < js.length; i++){
       			var option = document.createElement("OPTION");
@@ -113,11 +114,8 @@
    	}
 
    	function changeindicator() {
-   		var x = document.getElementById("year");
-
-			for (var i=0;i<x.length;  i++) {
-     			x.remove(i);
-			}
+   		ClearOptions("year")
+   		ClearOptions("age_group")
    		var Country = document.getElementById("country").value
    		if(Country != "Select a Country"){
    			var xhttp = new XMLHttpRequest();
@@ -133,6 +131,8 @@
       		xhttp.setRequestHeader( 'Access-Control-Allow-Origin', '*' );
       		xhttp.send();
 
+      		var x = document.getElementById("year");
+
       		var js = JSON.parse(xhttp.responseText);
 
       		for(var i=0 ; i < js.length; i++){
@@ -147,11 +147,7 @@
    	}
 
    	function changeyear() {
-   			var x = document.getElementById("age_group");
-
-      		for (var i=0;i<x.length;  i++) {
-     			x.remove(i);
-			}
+   			ClearOptions("age_group")
    			var xhttp = new XMLHttpRequest();
       		xhttp.onreadystatechange = function() {
         		if (this.readyState == XMLHttpRequest && this.status == 200) {
@@ -167,6 +163,8 @@
       		xhttp.setRequestHeader( 'Access-Control-Allow-Origin', '*' );
       		xhttp.send();
 
+      		var x = document.getElementById("age_group");
+
       		var js = JSON.parse(xhttp.responseText);
 
       		for(var i=0 ; i < js.length; i++){
@@ -180,31 +178,68 @@
    	}
 
     function loadDoc() {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == XMLHttpRequest && this.status == 200) {
-          document.getElementById("searchbutton").innerHTML = this.responseText;
-        }
-      };
-      var Country = document.getElementById("country").value
-      var Indicator = document.getElementById("indicator").value
-      var Age_group = document.getElementById("age_group").value
-      var Year = document.getElementById("year").value
+      	var xhttp = new XMLHttpRequest();
+      	xhttp.onreadystatechange = function() {
+        	if (this.readyState == XMLHttpRequest && this.status == 200) {
+        		document.getElementById("searchbutton").innerHTML = this.responseText;
+        	}
+      	};
+      	var Country = document.getElementById("country").value
+      	var Indicator = document.getElementById("indicator").value
+      	var Age_group = document.getElementById("age_group").value
+      	var Year = document.getElementById("year").value
 
-      console.log(Country)
-      console.log(Indicator)
-      console.log(Age_group)
-      console.log(Year)
-      xhttp.open("GET","http://localhost:5000/readdata/"+Country+"/"+Indicator+"/"+Age_group+"/"+Year, false);
-      xhttp.setRequestHeader( 'Access-Control-Allow-Headers', '*' );
-      xhttp.setRequestHeader( 'Content-Type', 'application/javascript' );
-      xhttp.setRequestHeader( 'Access-Control-Allow-Origin', '*' );
-      xhttp.send();
-      console.log(xhttp.response);
-      console.log(xhttp.responseText);
-      var js = JSON.parse(xhttp.responseText);
+	    xhttp.open("GET","http://localhost:5000/oneCountryOverTime/"+Indicator+"/"+Country+"/"+Age_group, false);
+      	xhttp.setRequestHeader( 'Access-Control-Allow-Headers', '*' );
+      	xhttp.setRequestHeader( 'Content-Type', 'application/javascript' );
+      	xhttp.setRequestHeader( 'Access-Control-Allow-Origin', '*' );
+      	xhttp.send();
+	    var js = JSON.parse(xhttp.responseText);
 
-     console.log(js);
+      	var ctx = document.getElementById("myChart").getContext('2d');
+		var myChart = new Chart(ctx, {
+    	type: 'line',
+    	data: {
+        	labels: js[0],
+        	datasets: [{
+            	label: 'percentage of women getting pregnant before 15',
+            	data: js[1],
+            	backgroundColor: [
+                	'rgba(255, 99, 132, 0.2)',
+
+	            ],
+    	        borderColor: [
+        	        'rgba(255,99,132,1)',
+
+            	],
+            	borderWidth: 1
+       		}]
+    	},
+    	options: {
+        	scales: {
+            	yAxes: [{
+                	ticks: {
+                    	beginAtZero:true
+                	}
+            	}]
+        	}
+    	}
+	});
+
+     //  console.log(Country)
+     //  console.log(Indicator)
+     //  console.log(Age_group)
+     //  console.log(Year)
+     //  xhttp.open("GET","http://localhost:5000/readdata/"+Country+"/"+Indicator+"/"+Age_group+"/"+Year, false);
+     //  xhttp.setRequestHeader( 'Access-Control-Allow-Headers', '*' );
+     //  xhttp.setRequestHeader( 'Content-Type', 'application/javascript' );
+     //  xhttp.setRequestHeader( 'Access-Control-Allow-Origin', '*' );
+     //  xhttp.send();
+     //  console.log(xhttp.response);
+     //  console.log(xhttp.responseText);
+     //  var js = JSON.parse(xhttp.responseText);
+
+     // console.log(js);
     }
   </script>
     </div>
