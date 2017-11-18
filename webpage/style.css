@@ -8,7 +8,9 @@
 .top img{
 
 }
-
+body{
+  background-color:#700370;
+}
 * {
   margin: 0;
 }
@@ -30,4 +32,7 @@ html, body {
 .site-footer {
   background: #55BAB2;
   font-family: Arial;
+  font-size: 25px;
 }
+a{ text-decoration: none;}
+a:hover{txt-decoration:underline;}
