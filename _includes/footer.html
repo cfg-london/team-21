@@ -1,0 +1,48 @@
+<footer class="site-footer">
+
+  <div class="wrapper">
+
+    <!--<h2 class="footer-heading">{{ site.title }}</h2>-->
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col  footer-col-1">
+        <ul class="contact-list">
+          <li>{{ site.title }}</li>
+          <li>
+            <a href="mailto:{{ site.email }}">
+              <span class="icon">
+                <img class="social-icon" src="/assets/envelope-closed.svg" alt="Mail Icon" />
+              </span>
+              <span class="username">{{ site.email }}</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://facebook.com/{{ site.facebook_page }}/" class="facebook-link">
+              <span class="icon">
+                <img class="social-icon" src="/assets/FB-f-Logo__blue_50.png" alt="Facebook Logo" />
+              </span>
+              <span class="username">Find Us on Facebook</span>
+            </a>
+          </li>
+          <li>
+            <a href="/about-site/">
+              <span class="icon">
+                <img class="social-icon" src="/assets/target.svg" />
+                <span class="username">Open Source Licences & Site Info</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-col  footer-col-2">
+      </div>
+
+      <div class="footer-col  footer-col-3">
+        <p class="text">{{ site.description }}</p>
+        <p class="text">{{ site.copyright }}</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
