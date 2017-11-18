@@ -54,8 +54,25 @@ def possiblegroups(country,index,year):
 @cross_origin()
 def oneCountryOverTime(index,country,age):
     indicator = indicatorMap.dict_map[index]
-    dataOverYears = multiVariate.one_country_over_time(indictor,country,age)
+    dataOverYears = multiVariate.one_country_over_time(indicator,country,age)
     data = json.dumps(dataOverYears)
+    resp = Response(data,status=200,mimetype='application/json')
+    return resp
+
+#@app.route("/oneCountryOverTime/<index>/<country>",methods=['GET'])
+#@cross_origin()
+#def allAgesGroups(index,country):
+#    indicator = indicatorMap.dict_map[index]
+#    ageGroups=
+#    for (group in ageGroups):
+
+
+@app.route("/compareCountry/<index>/<year>/<age>",methods=['GET'])
+@cross_origin()
+def compareCountry(index,year,age):
+    indicator = indicatorMap.dict_map[index]
+    countryValues = getSingleValue(indicator, year, age)
+    data = json.dumps(countryValues)
     resp = Response(data,status=200,mimetype='application/json')
     return resp
 
