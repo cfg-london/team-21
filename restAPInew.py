@@ -8,9 +8,17 @@ import multiVariate
 
 app = Flask(__name__)
 
-@app.route("/")
-def hello():
-    return "Hello World!"
+@app.route("/line_graph")
+def hello1():
+    return render_template('./_includes/head.html',
+                           'header.html',
+                           './_includes/footer.html')
+
+@app.route("/complex_graph")
+def hello2():
+    return render_template('./_includes/head.html',
+                           'graph.html',
+                           './_includes/footer.html')
 
 
 @app.route("/readdata/<country>/<index>/<age>/<year>",methods=['GET'])
