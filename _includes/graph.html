@@ -130,7 +130,7 @@
     	data: {
         	labels: js[0],
         	datasets: [{
-            	label: Indicator,
+            //	label: Indicator,
             	data: js[1],
             	backgroundColor: [
                 	'rgba(255, 99, 132, 0.2)',
@@ -144,6 +144,16 @@
        		}]
     	},
     	options: {
+          legend: {
+            display: false
+          },
+          tooltips: {
+            callbacks: {
+              label: function(tooltipItem) {
+                return tooltipItem.yLabel;
+            }
+          }
+        },
         	scales: {
             	yAxes: [{
                 	ticks: {
@@ -183,6 +193,16 @@ var myChart = new Chart(ctx, {
         }]
     },
     options: {
+      legend: {
+        display: false
+      },
+      tooltips: {
+        callbacks: {
+           label: function(tooltipItem) {
+                  return tooltipItem.yLabel;
+           }
+        }
+      },
         scales: {
             yAxes: [{
                 ticks: {
