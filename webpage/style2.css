@@ -1,16 +1,8 @@
-.top{
-    background-image: url("images/1.jpg");
-	background-color: #55BAB2;
-}
-.top h1{
-
-}
-.top img{
-
-}
 body{
-  background-color: white;
+    background-image: url("images/topbackground.jpg");
 }
+
+
 
 #banner .content h1 {
   border: 3px solid #07509B;
