@@ -17,7 +17,7 @@ def getvalue(indicator, country, year, group):
           if row[0] == country:
               goodcountry.append(row)
       for row in goodcountry:
-          if row[1] == year:
+          if row[1][:4] == year:
               goodcountry_and_year.append(row)
       for j in data[0]:
           if j == group:
@@ -31,4 +31,5 @@ def getvalue(indicator, country, year, group):
     else:
         newanswer = answer
     return newanswer
+
 
