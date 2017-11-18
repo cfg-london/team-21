@@ -4,6 +4,7 @@ from flask_cors import cross_origin
 import json
 import getSingleValue
 import indicatorMap
+import multiVariate
 
 app = Flask(__name__)
 
@@ -48,6 +49,16 @@ def possiblegroups(country,index,year):
     print(data)
     resp = Response(data,status=200,mimetype='application/json')
     return resp
+
+@app.route("/oneCountryOverTime/<index>/<country>/<age>",methods=['GET'])
+@cross_origin()
+def oneCountryOverTime(index,country,age):
+    indicator = indicatorMap.dict_map[index]
+    dataOverYears = multiVariate.one_country_over_time(indictor,country,age)
+    data = json.dumps(dataOverYears)
+    resp = Response(data,status=200,mimetype='application/json')
+
+
 
 if __name__ == "__main__":
 	app.run() 
