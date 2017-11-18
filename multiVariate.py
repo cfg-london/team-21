@@ -33,7 +33,6 @@ def getvalue(indicator, country, year, group):
         newanswer = answer
     return newanswer
 
-#print(getvalue("Married women currently using any modern method of contraception.csv","Colombia","2015","15-19"))
 
 
 
@@ -64,7 +63,7 @@ def one_country_over_time(indicator, country, group):
                 x_values.append(float(k[1]))
                 y_values.append(float(k[goodgroupid]))
 
-    return x_values, y_values    
+    return [x_values, y_values]   
 
 
 
@@ -85,11 +84,8 @@ def simple_correlation_w_plot(indicator1, indicator2, country, group):
     x2s = one_country_over_time(indicator2, country, group)[0]
     y2s = one_country_over_time(indicator2, country, group)[1]
 
-    print(y1s)
-    print(y2s)
     ybar1 = numpy.mean(y1s)
     ybar2 = numpy.mean(y2s)
-    print(ybar2)
     for i in range(len(y1s)):
         a.append(y1s[i] - ybar1)
         b.append(y2s[i] - ybar2)
@@ -103,12 +99,10 @@ def simple_correlation_w_plot(indicator1, indicator2, country, group):
 
     corr_coeff = c_sum/(a2_sum*b2_sum)**0.5
         
-    return corr_coeff, x1s, y1s, x2s, y2s
+    return [corr_coeff, x1s, y1s, x2s, y2s]
 
 
 
-#indicator1 = 'Married women currently using any method of contraception'
-#indicator2 = 'Married women currently using any modern method of contraception'
-#country = 'Colombia'
-#group = 'Total'           
+
+        
 
