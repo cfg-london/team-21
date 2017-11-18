@@ -62,6 +62,8 @@ def one_country_over_time(indicator, country, group):
             for k in goodcountry:
                 x_values.append(float(k[1]))
                 y_values.append(float(k[goodgroupid]))
+            x_values = list(reversed(x_values))
+            y_values = list(reversed(y_values))
 
     return [x_values, y_values]   
 
