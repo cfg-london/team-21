@@ -57,7 +57,7 @@ def oneCountryOverTime(index,country,age):
     dataOverYears = multiVariate.one_country_over_time(indictor,country,age)
     data = json.dumps(dataOverYears)
     resp = Response(data,status=200,mimetype='application/json')
-
+    return resp
 
 
 if __name__ == "__main__":
