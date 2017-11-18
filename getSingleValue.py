@@ -30,8 +30,38 @@ def getvalue(indicator, country, year, group):
     if answer == "":
         newanswer = "N/A"
     else:
-        newanswer = answer
+        newanswer = float(answer)
+    
     return newanswer
 
-#print(getvalue("Married women currently using any modern method of contraception.csv","Colombia","2015","15-19"))
+def possibleyear(indicator, country):
+    indicator = indicator + ".csv"
+    data = []
+    pyear= []
+    with open(indicator) as f:
+      reader = csv.reader(f)
+      for row in reader:
+          data.append(row)
+    for row in data:
+        if row[0] == country:
+            pyear.append(row[1][:4])
+    return pyear
 
+def possiblegroup(indicator,country, year):
+    indicator = indicator + ".csv"
+    data = []
+    pgroup = []
+    with open(indicator) as f:
+      reader = csv.reader(f)
+      for row in reader:
+          data.append(row)
+    for i in data[0]:
+        if i!="Country" and i!="Survey":
+            pgroup.append(i)
+    return pgroup
+
+
+
+
+#print(getvalue("Married women currently using any modern method of contraception","Colombia","2015","15-19"))
+#print(possiblegroup("Married women currently using any modern method of contraception","Colombia","2005"))
