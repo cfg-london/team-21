@@ -14,8 +14,11 @@ def hello():
 @app.route("/readdata/<country>/<index>/<age>/<year>",methods=['GET'])
 def readdata(country,age,year,index):
     indicator = indicatorMap.dict_map[index]
-    data = json.dumps(getSingleValue.getvalue(indicator,courtry,year,age))
-    return data
+    data = json.dumps(getSingleValue.getvalue(indicator,country,year,age))
+    
+    resp = Response(data,status=200,mimetype='application/json')
+    
+    return resp
 
 
 if __name__ == "__main__":
