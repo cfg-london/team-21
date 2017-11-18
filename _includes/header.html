@@ -3,7 +3,7 @@
     <div class="wrapper">
     
     <div class="menu" >
-  <select id="country" class="selects" name="Country">
+  <select id="country" class="selects" name="Country" onclick="">
     <option selected="Country">Select a Country</option>
     <option value="EL SALVADOR">EL SALVADOR</option>
     <option value="COLOMBIA">COLOMBIA</option>
@@ -44,7 +44,7 @@
   </select>
   <select id="age_group" class="selects" name="Age Groups">
     <option selected="Age Groups">Age Groups</option>
-    <option value="15-20">15-20</option>
+    <option value="15-20">15-19</option>
     <option value="20-25">20-25</option>
     <option value="25-30">25-30</option>
     <option value="30-35">30-35</option>
@@ -69,6 +69,14 @@
 </div>
   
   <script>
+   /* function addCountry() {
+      var x = document.getElementById("country");
+      var rawFile = new XMLHttpRequest();
+      rawFile.open("GET", "file:///C:/Users/Debjit/codeforgood/team-21/country.txt", false);
+      var option = document.createElement("option");
+      option.text = "Kiwi";
+      x.add(option);
+    }  */
     function loadDoc() {
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
