@@ -2,6 +2,7 @@ from flask import Flask
 from flask import Response
 import json
 import getSingleValue
+import indicatorMap
 
 app = Flask(__name__)
 
@@ -12,8 +13,8 @@ def hello():
 
 @app.route("/readdata/<country>/<index>/<age>/<year>",methods=['GET'])
 def readdata(country,age,year,index):
-    
-    data = getSingleValue.getvalue(index,courtry,year,age)
+    indicator = indicatorMap.dict_map[index]
+    data = json.dumps(getSingleValue.getvalue(indicator,courtry,year,age))
     return data
 
 
