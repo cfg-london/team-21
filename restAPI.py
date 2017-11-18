@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import Response
+from flask_cors import cross_origin
 import json
 import getSingleValue
 import indicatorMap
@@ -12,11 +13,19 @@ def hello():
 
 
 @app.route("/readdata/<country>/<index>/<age>/<year>",methods=['GET'])
+@cross_origin()
 def readdata(country,age,year,index):
+    
+    print( country )
+    print( age )
+    print( year )
+    print( index )
+    
     indicator = indicatorMap.dict_map[index]
     data = json.dumps(getSingleValue.getvalue(indicator,country,year,age))
-    
-    resp = Response(data,status=200,mimetype='application/json')
+    responseData = { 'data' : data }
+    print(responseData)
+    resp = Response( data,status=200,mimetype='application/json')
     
     return resp
 
