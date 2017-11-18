@@ -52,7 +52,7 @@
   </select>
   <select id="year" class="selects" name="Year">
     <option selected="Year">Year</option>
-    <option value="2017">2017</option>
+    <!-- <option value="2017">2017</option>
     <option value="2016">2016</option>
     <option value="2015">2015</option>
     <option value="2014">2014</option>
@@ -63,7 +63,7 @@
     <option value="2009">2009</option>
     <option value="2008">2008</option>
     <option value="2007">2007</option>
-    <option value="2006">2006</option>
+    <option value="2006">2006</option> -->
   </select>
   <button id="searchbutton" class="selects" type="button" onclick="loadDoc()">Search!</button>
 </div>
@@ -96,7 +96,7 @@
 
       		var js = JSON.parse(xhttp.responseText);
 
-      		var x = document.getElementById("age_group");
+      		var x = document.getElementById("year");
 
       		for(var i=0 ; i < js.length; i++){
       			var option = document.createElement("OPTION");
@@ -127,7 +127,7 @@
 
       		var js = JSON.parse(xhttp.responseText);
 
-      		var x = document.getElementById("age_group");
+      		var x = document.getElementById("year");
 
       		for(var i=0 ; i < js.length; i++){
       			var option = document.createElement("OPTION");
