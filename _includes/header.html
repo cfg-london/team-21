@@ -3,17 +3,17 @@
     <div class="wrapper">
     
     <div class="menu" >
-  <select id="country" class="selects" name="Country" onclick="">
-    <option selected="Country">Select a Country</option>
-    <option value="EL SALVADOR">EL SALVADOR</option>
+  <select id="country" class="selects" name="Country" onchange="changecountry()">
+    <option selected="Select a Country">Select a Country</option>
+    <option value="El Salvador">EL SALVADOR</option>
     <option value="Colombia">COLOMBIA</option>
-    <option value="SENEGAL">SENEGAL</option>
-    <option value="KENYA">KENYA</option>
-    <option value="INDIA">INDIA</option>
-    <option value="INDONESIA">INDONESIA</option>
+    <option value="Senegal">SENEGAL</option>
+    <option value="Kenya">KENYA</option>
+    <option value="India">INDIA</option>
+    <option value="Indonesia">INDONESIA</option>
   </select>
-  <select id="indicator" class="selects" name="Indicator">
-    <option selected="Indicator">Select a Indicator</option>
+  <select id="indicator" class="selects" name="Indicator" onchange="changeindicator()">
+    <option selected="Select a Indicator">Select a Indicator</option>
     <option value="Married women currently using any method of contraception">Married women currently using any method of contraception</option>
     <option value="Married women currently using any modern method of contraception">Married women currently using any modern method of contraception</option>
     <option value="Unmet need for family planning">Unmet need for family planning</option>
@@ -44,15 +44,15 @@
   </select>
   <select id="age_group" class="selects" name="Age Groups">
     <option selected="Age Groups">Age Groups</option>
-    <option value="15-19">15-19</option>
+    <!-- <option value="15-19">15-19</option>
     <option value="20-25">20-25</option>
     <option value="25-30">25-30</option>
-    <option value="30-35">30-35</option>
+    <option value="30-35">30-35</option> -->
     
   </select>
-  <select id="year" class="selects" name="Year">
+  <select id="year" class="selects" name="Year" onchange="changeyear()">
     <option selected="Year">Year</option>
-    <option value="2017">2017</option>
+    <!-- <option value="2017">2017</option>
     <option value="2016">2016</option>
     <option value="2015">2015</option>
     <option value="2014">2014</option>
@@ -63,7 +63,7 @@
     <option value="2009">2009</option>
     <option value="2008">2008</option>
     <option value="2007">2007</option>
-    <option value="2006">2006</option>
+    <option value="2006">2006</option> -->
   </select>
   <button id="searchbutton" class="selects" type="button" onclick="loadDoc()">Search!</button>
 </div>
@@ -77,6 +77,108 @@
       option.text = "Kiwi";
       x.add(option);
     }  */
+
+
+   	function changecountry() {
+   		var x = document.getElementById("year");
+
+      		for (var i=0;i<x.length;  i++) {
+     			x.remove(i);
+			}
+   		var Indicator = document.getElementById("indicator").value
+   		if(Indicator != "Select a Indicator"){
+   			var xhttp = new XMLHttpRequest();
+      		xhttp.onreadystatechange = function() {
+        		if (this.readyState == XMLHttpRequest && this.status == 200) {
+          			document.getElementById("country").innerHTML = this.responseText;
+        		}
+      		};
+      		var Country = document.getElementById("country").value
+      		xhttp.open("GET","http://localhost:5000/possibleyears/"+Country+"/"+Indicator, false);
+      		xhttp.setRequestHeader( 'Access-Control-Allow-Headers', '*' );
+      		xhttp.setRequestHeader( 'Content-Type', 'application/javascript' );
+      		xhttp.setRequestHeader( 'Access-Control-Allow-Origin', '*' );
+      		xhttp.send();
+
+      		var js = JSON.parse(xhttp.responseText);
+      		for(var i=0 ; i < js.length; i++){
+      			var option = document.createElement("OPTION");
+        		option.setAttribute("value", js[i]);
+        		var t = document.createTextNode(js[i]);
+        		option.appendChild(t);
+        		option.text = js[i];
+        		x.appendChild(option);
+      		}
+   		}
+   	}
+
+   	function changeindicator() {
+   		var x = document.getElementById("year");
+
+			for (var i=0;i<x.length;  i++) {
+     			x.remove(i);
+			}
+   		var Country = document.getElementById("country").value
+   		if(Country != "Select a Country"){
+   			var xhttp = new XMLHttpRequest();
+      		xhttp.onreadystatechange = function() {
+        		if (this.readyState == XMLHttpRequest && this.status == 200) {
+          			document.getElementById("indicator").innerHTML = this.responseText;
+        		}
+      		};
+      		var Indicator = document.getElementById("indicator").value
+      		xhttp.open("GET","http://localhost:5000/possibleyears/"+Country+"/"+Indicator, false);
+      		xhttp.setRequestHeader( 'Access-Control-Allow-Headers', '*' );
+      		xhttp.setRequestHeader( 'Content-Type', 'application/javascript' );
+      		xhttp.setRequestHeader( 'Access-Control-Allow-Origin', '*' );
+      		xhttp.send();
+
+      		var js = JSON.parse(xhttp.responseText);
+
+      		for(var i=0 ; i < js.length; i++){
+      			var option = document.createElement("OPTION");
+        		option.setAttribute("value", js[i]);
+        		var t = document.createTextNode(js[i]);
+        		option.appendChild(t);
+        		option.text = js[i];
+        		x.appendChild(option);
+      		}
+   		}
+   	}
+
+   	function changeyear() {
+   			var x = document.getElementById("age_group");
+
+      		for (var i=0;i<x.length;  i++) {
+     			x.remove(i);
+			}
+   			var xhttp = new XMLHttpRequest();
+      		xhttp.onreadystatechange = function() {
+        		if (this.readyState == XMLHttpRequest && this.status == 200) {
+          			document.getElementById("year").innerHTML = this.responseText;
+        		}
+      		};
+      		var Country = document.getElementById("country").value
+      		var Indicator = document.getElementById("indicator").value
+      		var Year = document.getElementById("year").value
+      		xhttp.open("GET","http://localhost:5000/possiblegroups/"+Country+"/"+Indicator+"/"+Year, false);
+      		xhttp.setRequestHeader( 'Access-Control-Allow-Headers', '*' );
+      		xhttp.setRequestHeader( 'Content-Type', 'application/javascript' );
+      		xhttp.setRequestHeader( 'Access-Control-Allow-Origin', '*' );
+      		xhttp.send();
+
+      		var js = JSON.parse(xhttp.responseText);
+
+      		for(var i=0 ; i < js.length; i++){
+      			var option = document.createElement("OPTION");
+        		option.setAttribute("value", js[i]);
+        		var t = document.createTextNode(js[i]);
+        		option.appendChild(t);
+        		option.text = js[i];
+        		x.appendChild(option);
+      		}
+   	}
+
     function loadDoc() {
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
