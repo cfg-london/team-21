@@ -98,14 +98,29 @@ def comparecountry(indicator,year,group):
         lvalue.append(getvalue(indicator,lcountry[4],year,group))
     else:
         lvalue.append(0)
-    return lcountry,lvalue
+    return [lcountry,lvalue]
+
+def comparegroup(indicator,country,year):
+    data = []
+    pgroup = []
+    gvalue = []
+    with open(indicator+".csv") as f:
+      reader = csv.reader(f)
+      for row in reader:
+          data.append(row)
+    for i in data[0]:
+        if i!="Country" and i!="Survey":
+            pgroup.append(i)
+    for i in pgroup:
+        gvalue.append(getvalue(indicator,country,year,i))
+    return [pgroup,gvalue]
 
 
-print(getvalue("Married women currently using any modern method of contraception","Colombia","2015","15-19"))
+#print(getvalue("Married women currently using any modern method of contraception","Colombia","2015","15-19"))
 
-print (yearexists("Married women currently using any modern method of contraception","Colombia","2015"))
+#print (yearexists("Married women currently using any modern method of contraception","Colombia","2015"))
 
-print(comparecountry("Married women currently using any modern method of contraception","2015","15-19"))
-
+#print(comparecountry("Married women currently using any modern method of contraception","2015","15-19"))
+#print(comparegroup("Married women currently using any modern method of contraception","Colombia","2015"))
 #print(getvalue("Married women currently using any modern method of contraception","Colombia","2015","15-19"))
 #print(possiblegroup("Married women currently using any modern method of contraception","Colombia","2005"))

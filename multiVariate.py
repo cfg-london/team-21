@@ -62,6 +62,8 @@ def one_country_over_time(indicator, country, group):
             for k in goodcountry:
                 x_values.append(float(k[1]))
                 y_values.append(float(k[goodgroupid]))
+            x_values = list(reversed(x_values))
+            y_values = list(reversed(y_values))
 
     return [x_values, y_values]   
 
@@ -131,8 +133,14 @@ def simple_correlation_w_plot(indicator1, indicator2, country, group):
     b2_sum = numpy.sum(b2)
 
     corr_coeff = c_sum/(a2_sum*b2_sum)**0.5
-        
-    return [corr_coeff, x1s, y1s, x2s, y2s]
+
+    nx1s = list(reversed(x1s))
+    ny1s = list(reversed(y1s))
+    nx2s = list(reversed(x2s))
+    ny2s = list(reversed(y2s))
+
+
+    return [corr_coeff, nx1s, ny1s, nx2s, ny2s]
 
 
 
