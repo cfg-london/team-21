@@ -3,9 +3,18 @@
 <script type="text/javascript", src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
 
     <div class="wrapper">
-    
+    <div class="menu">
+    <div align="center">
+  <select id="x-axis" class="selects" name="X-Axis" onchange="changeaxis()">
+    <option selected="Select X-Axis">Select X-Axis</option>
+    <option value="Country">Country</option>
+    <option value="Year">Year</option>
+    <option value="Age_group">Age_group</option>
+  </select>
+</div>
+</div>
     <div class="menu" >
-  <select id="country" class="selects" name="Country" onchange="changecountry()">
+  <select id="country" class="selects" name="Country" disabled="disabled">
     <option selected="Select a Country">Select a Country</option>
     <option value="El Salvador">EL SALVADOR</option>
     <option value="Colombia">COLOMBIA</option>
@@ -14,7 +23,7 @@
     <option value="India">INDIA</option>
     <option value="Indonesia">INDONESIA</option>
   </select>
-  <select id="indicator" class="selects" name="Indicator" onchange="changeindicator()">
+  <select id="indicator" class="selects" name="Indicator">
     <option selected="Select a Indicator">Select a Indicator</option>
     <option value="Married women currently using any method of contraception">Married women currently using any method of contraception</option>
     <option value="Married women currently using any modern method of contraception">Married women currently using any modern method of contraception</option>
@@ -44,17 +53,16 @@
     <option value="Wife earns more than husband">Wife earns more than husband</option>
     <option value="ICF International, 2015. The DHS Program STATcompiler. Funded by USAID. https://www.statcompiler.com. November 16 2017">ICF International, 2015. The DHS Program STATcompiler. Funded by USAID. https://www.statcompiler.com. November 16 2017</option>
   </select>
-  <select id="age_group" class="selects" name="Age Groups">
+  <select id="age_group" class="selects" name="Age Groups" disabled="disabled">
     <option selected="Age Groups">Age Groups</option>
-    <!-- <option value="15-19">15-19</option>
+    <option value="15-19">15-19</option>
     <option value="20-25">20-25</option>
     <option value="25-30">25-30</option>
-    <option value="30-35">30-35</option> -->
-    
+    <option value="30-35">30-35</option>
   </select>
-  <select id="year" class="selects" name="Year" onchange="changeyear()">
+  <select id="year" class="selects" name="Year" disabled="disabled">
     <option selected="Year">Year</option>
-    <!-- <option value="2017">2017</option>
+    <option value="2017">2017</option>
     <option value="2016">2016</option>
     <option value="2015">2015</option>
     <option value="2014">2014</option>
@@ -65,139 +73,57 @@
     <option value="2009">2009</option>
     <option value="2008">2008</option>
     <option value="2007">2007</option>
-    <option value="2006">2006</option> -->
+    <option value="2006">2006</option>
   </select>
-  <button id="searchbutton" class="selects" type="button" onclick="loadDoc()">Search!</button>
+  <button id="drawbutton" class="selects" type="button" onclick="loadDoc()">Draw!</button>
 </div>
   <canvas id="myChart" width="400" height="400"></canvas>
   <script>
-   /* function addCountry() {
-      var x = document.getElementById("country");
-      var rawFile = new XMLHttpRequest();
-      rawFile.open("GET", "file:///C:/Users/Debjit/codeforgood/team-21/country.txt", false);
-      var option = document.createElement("option");
-      option.text = "Kiwi";
-      x.add(option);
-    }  */
-
-    function ClearOptions(id){
-    	document.getElementById(id).options.length = 1;
-    }
-   	function changecountry() {
-   		ClearOptions("year")
-   		ClearOptions("age_group")
-   		var Indicator = document.getElementById("indicator").value
-   		if(Indicator != "Select a Indicator"){
-   			var xhttp = new XMLHttpRequest();
-      		xhttp.onreadystatechange = function() {
-        		if (this.readyState == XMLHttpRequest && this.status == 200) {
-          			document.getElementById("country").innerHTML = this.responseText;
-        		}
-      		};
-      		var Country = document.getElementById("country").value
-      		xhttp.open("GET","http://localhost:5000/possibleyears/"+Country+"/"+Indicator, false);
-      		xhttp.setRequestHeader( 'Access-Control-Allow-Headers', '*' );
-      		xhttp.setRequestHeader( 'Content-Type', 'application/javascript' );
-      		xhttp.setRequestHeader( 'Access-Control-Allow-Origin', '*' );
-      		xhttp.send();
-
-      		var x = document.getElementById("year");
-
-      		var js = JSON.parse(xhttp.responseText);
-      		for(var i=0 ; i < js.length; i++){
-      			var option = document.createElement("OPTION");
-        		option.setAttribute("value", js[i]);
-        		var t = document.createTextNode(js[i]);
-        		option.appendChild(t);
-        		option.text = js[i];
-        		x.appendChild(option);
-      		}
-   		}
-   	}
-
-   	function changeindicator() {
-   		ClearOptions("year")
-   		ClearOptions("age_group")
-   		var Country = document.getElementById("country").value
-   		if(Country != "Select a Country"){
-   			var xhttp = new XMLHttpRequest();
-      		xhttp.onreadystatechange = function() {
-        		if (this.readyState == XMLHttpRequest && this.status == 200) {
-          			document.getElementById("indicator").innerHTML = this.responseText;
-        		}
-      		};
-      		var Indicator = document.getElementById("indicator").value
-      		xhttp.open("GET","http://localhost:5000/possibleyears/"+Country+"/"+Indicator, false);
-      		xhttp.setRequestHeader( 'Access-Control-Allow-Headers', '*' );
-      		xhttp.setRequestHeader( 'Content-Type', 'application/javascript' );
-      		xhttp.setRequestHeader( 'Access-Control-Allow-Origin', '*' );
-      		xhttp.send();
-
-      		var x = document.getElementById("year");
-
-      		var js = JSON.parse(xhttp.responseText);
-
-      		for(var i=0 ; i < js.length; i++){
-      			var option = document.createElement("OPTION");
-        		option.setAttribute("value", js[i]);
-        		var t = document.createTextNode(js[i]);
-        		option.appendChild(t);
-        		option.text = js[i];
-        		x.appendChild(option);
-      		}
-   		}
-   	}
-
-   	function changeyear() {
-   			ClearOptions("age_group")
-   			var xhttp = new XMLHttpRequest();
-      		xhttp.onreadystatechange = function() {
-        		if (this.readyState == XMLHttpRequest && this.status == 200) {
-          			document.getElementById("year").innerHTML = this.responseText;
-        		}
-      		};
-      		var Country = document.getElementById("country").value
-      		var Indicator = document.getElementById("indicator").value
-      		var Year = document.getElementById("year").value
-      		xhttp.open("GET","http://localhost:5000/possiblegroups/"+Country+"/"+Indicator+"/"+Year, false);
-      		xhttp.setRequestHeader( 'Access-Control-Allow-Headers', '*' );
-      		xhttp.setRequestHeader( 'Content-Type', 'application/javascript' );
-      		xhttp.setRequestHeader( 'Access-Control-Allow-Origin', '*' );
-      		xhttp.send();
-
-      		var x = document.getElementById("age_group");
-
-      		var js = JSON.parse(xhttp.responseText);
-
-      		for(var i=0 ; i < js.length; i++){
-      			var option = document.createElement("OPTION");
-        		option.setAttribute("value", js[i]);
-        		var t = document.createTextNode(js[i]);
-        		option.appendChild(t);
-        		option.text = js[i];
-        		x.appendChild(option);
-      		}
-   	}
-
     function loadDoc() {
       	var xhttp = new XMLHttpRequest();
       	xhttp.onreadystatechange = function() {
         	if (this.readyState == XMLHttpRequest && this.status == 200) {
-        		document.getElementById("searchbutton").innerHTML = this.responseText;
+        		document.getElementById("drawbutton").innerHTML = this.responseText;
         	}
       	};
       	var Country = document.getElementById("country").value
       	var Indicator = document.getElementById("indicator").value
       	var Age_group = document.getElementById("age_group").value
       	var Year = document.getElementById("year").value
+        var axis = document.getElementById("x-axis").value
+        if(document.getElementById("country").disabled == false){
+          if(Country == "Select a Country"){
+            return;
+          }
+        }
+        if(document.getElementById("age_group").disabled == false){
+          if(Age_group == "Age Groups"){
+            return;
+          }
+        }
+        if(document.getElementById("year").disabled == false){
+          if(Year == "Year"){
+            return;
+          }
+        }
+        if(axis == "Year"){
+          xhttp.open("GET","http://localhost:5000/oneCountryOverTime/"+Indicator+"/"+Country+"/"+Age_group, false);
+        }
+        else if( axis == "Country"){
+          xhttp.open("GET","http://localhost:5000/compareCountry/"+Indicator+"/"+Year+"/"+Age_group, false);
+        }
+        else{
+          xhttp.open("GET","http://localhost:5000/compareAgeGroups/"+Indicator+"/"+Country+"/"+Year, false);
+        }
 
-	    xhttp.open("GET","http://localhost:5000/oneCountryOverTime/"+Indicator+"/"+Country+"/"+Age_group, false);
+	    
       	xhttp.setRequestHeader( 'Access-Control-Allow-Headers', '*' );
       	xhttp.setRequestHeader( 'Content-Type', 'application/javascript' );
       	xhttp.setRequestHeader( 'Access-Control-Allow-Origin', '*' );
       	xhttp.send();
 	    var js = JSON.parse(xhttp.responseText);
-
+      
+      if(axis == "Year"){
       	var ctx = document.getElementById("myChart").getContext('2d');
 		var myChart = new Chart(ctx, {
     	type: 'line',
@@ -227,6 +153,46 @@
         	}
     	}
 	});
+  }
+  else {
+    var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: js[0],
+        datasets: [{
+            label: Indicator,
+            data: js[1],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+  }
 
      //  console.log(Country)
      //  console.log(Indicator)
@@ -242,6 +208,33 @@
      //  var js = JSON.parse(xhttp.responseText);
 
      // console.log(js);
+    }
+
+    function enable(id){
+      document.getElementById(id).disabled = false;
+    }
+
+    function disable(id){
+      document.getElementById(id).disabled = true;
+    }
+    function changeaxis() {
+      var axis = document.getElementById("x-axis").value
+      if(axis=="Year"){
+        disable("year");
+        enable("country");
+        enable("age_group");
+      }
+      else if(axis=="Country"){
+        enable("year");
+        disable("country");
+        enable("age_group");
+      }
+      else if(axis=="Age_group"){
+        enable("year");
+        disable("age_group");
+        enable("country");
+      }
+
     }
   </script>
     </div>
