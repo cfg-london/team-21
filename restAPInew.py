@@ -29,6 +29,25 @@ def readdata(country,age,year,index):
     
     return resp
 
+@app.route("/possibleyears/<country>/<index>",methods=['GET'])
+@cross_origin()
+def possibleyears(country,index):
+    indicator = indicatorMap.dict_map[index]
+    years = getSingleValue.possibleyear(indicator,country)
+    data = json.dumps(years)
+    print(data)
+    resp = Response( data,status=200,mimetype='application/json')
+    return resp
+
+@app.route("/possiblegroups/<country>/<index>/<year>",methods=['GET'])
+@cross_origin()
+def possiblegroups(country,index,year):
+    indicator = indicatorMap.dict_map[index]
+    groups = getSingleValue.possiblegroup(indicator,country,year)
+    data = json.dumps(groups)
+    print(data)
+    resp = Response(data,status=200,mimetype='application/json')
+    return resp
 
 if __name__ == "__main__":
 	app.run() 
