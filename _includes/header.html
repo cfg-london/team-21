@@ -87,7 +87,7 @@
           			document.getElementById("searchbutton").innerHTML = this.responseText;
         		}
       		};
-
+      		var Country = document.getElementById("country").value
       		xhttp.open("GET","http://localhost:5000/possibleyears/"+Country+"/"+Indicator, false);
       		xhttp.setRequestHeader( 'Access-Control-Allow-Headers', '*' );
       		xhttp.setRequestHeader( 'Content-Type', 'application/javascript' );
@@ -118,7 +118,7 @@
           			document.getElementById("searchbutton").innerHTML = this.responseText;
         		}
       		};
-
+      		var Indicator = document.getElementById("indicator").value
       		xhttp.open("GET","http://localhost:5000/possibleyears/"+Country+"/"+Indicator, false);
       		xhttp.setRequestHeader( 'Access-Control-Allow-Headers', '*' );
       		xhttp.setRequestHeader( 'Content-Type', 'application/javascript' );
